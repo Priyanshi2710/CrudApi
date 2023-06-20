@@ -15,8 +15,12 @@ builder.Services.AddDbContext<EmployeeContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeContext"));
 });
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IService<Employee>, EmployeeService>();
+
+
 
 builder.Services.AddControllers();
 var app = builder.Build();

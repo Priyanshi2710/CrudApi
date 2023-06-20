@@ -14,7 +14,7 @@ namespace Domain
         public int CityCode { get; set; }
         public string Cityname { get; set; }
         
-        //public ICollection<Employee> employees { get; set; }
+       
 
 
 

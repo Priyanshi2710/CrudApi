@@ -2,8 +2,8 @@
 
 namespace Application
 {
-    public interface IService<T> where T : class
-    
+    public interface IService<T> 
+
     {       
         IEnumerable<T> GetAll();
         T Get(int Id);

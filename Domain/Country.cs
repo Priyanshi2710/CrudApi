@@ -14,7 +14,7 @@ namespace Domain
         public int CountryCode { get; set; }
         public string Countryname { get; set; }
 
-      //  public ICollection<Employee> employees { get; set; }
+     
 
     }
 }

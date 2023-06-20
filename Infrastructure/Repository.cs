@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using AutoMapper;
+using Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,32 +13,39 @@ namespace Infrastructure
     {
         private readonly EmployeeContext _employeeContext;
         private DbSet<T> entities;
+        private readonly IMapper _mapper;
 
-        public Repository(EmployeeContext employeeContext)
+        public Repository(EmployeeContext employeeContext,IMapper mapper)
         {
             _employeeContext = employeeContext;
-            entities = _employeeContext.Set<T>();
+          //  entities = _employeeContext.Set<T>();
+            _mapper = mapper;
         }
 
-        public void Add(T entity)
+        public async void Add(T entity)
         {
-           if (entity == null)
+            if (entity == null)
             {
-                throw new ArgumentNullException(nameof(entity));
+                throw new ArgumentNullException("entity");
             }
-           entities.Add(entity);
+            entities.Add(entity);
             _employeeContext.SaveChanges();
-
         }
 
         public IEnumerable<T> GetAll()
         {
-            return entities.AsEnumerable();
+           // var result = _employeeContext.Employees.ToList();
+           // return (IEnumerable<T>)result;
+           var emp = _employeeContext.Employees.Include(c=> c.City).Include(c => c.Country).Include(c=> c.State).ToList();
+
+            return (IEnumerable<T>)emp.AsEnumerable();
         }
 
         public T GetById(int id)
         {
-            return entities.SingleOrDefault(c => c.Id == id);
+            //throw new ArgumentNullException("entity");
+            return entities.Find(id);
+            //return entities.SingleOrDefault(c => c.Id == id);
         }
 
         public void Remove(T entity)

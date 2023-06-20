@@ -13,6 +13,6 @@ namespace Domain
         [Key]
         public int StateCode { get; set; }
         public string StateName { get; set; }
-        //public ICollection<Employee> employees { get; set; }
+       
     }
 }
